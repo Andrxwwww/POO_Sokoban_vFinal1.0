@@ -4,7 +4,6 @@ import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
 public abstract class Movable extends GameElement {
-    //TODO: implementar interaction nesta class - com caixote e palete e tambem na classe parede e paredeRachada
 
     public Movable(Point2D position) {
         super(position);

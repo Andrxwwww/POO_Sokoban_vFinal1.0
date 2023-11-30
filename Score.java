@@ -33,7 +33,7 @@ public class Score {
             Scanner readingFile = new Scanner(new File("Scores.txt"));
             while (readingFile.hasNextLine()) {
                 String line = readingFile.nextLine();
-                if (line.contains("Top 3 : ")) {
+                if (line.contains("Top 3 : \n")) {
                     readingFile.nextLine();
                 }
                 if (line.contains("had a total score of")) {

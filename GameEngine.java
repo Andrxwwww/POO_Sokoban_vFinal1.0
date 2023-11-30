@@ -29,10 +29,9 @@ public class GameEngine implements Observer {
 	public int level_num; // Numero do nivel
 	public int numberOfTargets; // Numero de alvos
 	public int score; // Pontuacao
-	public int moves; // Numero de movimentos da empilhadora
 	public String playerName; // Nome do jogador
 
-	public final int FIRST_LEVEL = 5;
+	public final int FIRST_LEVEL = 6;
 
 	private GameEngine() {
 		gameElementsList = new ArrayList<>();
@@ -62,10 +61,9 @@ public class GameEngine implements Observer {
 		gui.go(); // 4. lancar a GUI
 
 		this.numberOfTargets = 0;
-		this.moves = 0;
 		this.level_num = FIRST_LEVEL; // comeca no nivel 1
 		this.score = 0;
-		//inputPlayerName();
+		inputPlayerName();
 
 		Score.createHighScoreFile(); // criar o ficheiro de scores
 		createLevel(level_num); // criar o armazem
@@ -80,7 +78,7 @@ public class GameEngine implements Observer {
 		gui.update();
 		if (bobcat != null && Direction.isDirection(key)) { // se a empilhadora nao for null e a tecla pressionada for uma direcao(setinhas)
 			bobcatKeyMechanics(key);
-			gui.setStatusMessage(" SOKOBAN " + " | Player: " + playerName + " | Level: " + level_num + " | Battery: " + bobcat.getBattery() + " | Moves: " + moves + " | Score: " + score);
+			gui.setStatusMessage(" SOKOBAN " + " | Player: " + playerName + " | Level: " + level_num + " | Battery: " + bobcat.getBattery() + " | Moves: " + bobcat.getMoves() + " | Score: " + score);
 			bobcat.pickUpBattery();
 			bobcat.pickUpHammer();
 
@@ -136,7 +134,7 @@ public class GameEngine implements Observer {
 		}
 
 		if (numberOfTargetsWithBoxes == numberOfTargets) {
-			this.score += 10000 / ((moves) + (bobcat.getBattery())); // Por isso , quanto mair o score , menor os movimentos e a bateria
+			this.score += 100000 / ((bobcat.getMoves()) + (bobcat.getBattery())); // Por isso , quanto mair o score , menor os movimentos e a bateria
 			this.level_num++;
 			if (this.level_num > 6) {
 				infoBox("press SPACE for restart or ENTER for exit", "You Won the Game :D !!");
@@ -154,8 +152,7 @@ public class GameEngine implements Observer {
 
 		gui.clearImages(); // apaga todas as imagens atuais da GUI
 		gameElementsList.clear(); // apaga todos os elementos da lista de elementos
-		numberOfTargets = 0	;
-		moves = 0;
+		numberOfTargets = 0;
 
 		createLevel(this.level_num);
 		sendImagesToGUI();
@@ -203,7 +200,6 @@ public class GameEngine implements Observer {
 	private void bobcatKeyMechanics(int key) {
 		bobcat.move(key);
 		bobcat.driveTo(Direction.directionFor(key));
-		moves++;
 	}
 
 	private void sendImagesToGUI() {

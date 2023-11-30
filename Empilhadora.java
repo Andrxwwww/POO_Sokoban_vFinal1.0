@@ -10,6 +10,7 @@ public class Empilhadora extends Movable{
 	private String imageName;
 	private int Battery;
 	private boolean setHammer;
+	private int moves;
 
 	private final int BATTERY_RELOAD = 50;
 	private final int FULL_BATTERY = 100;
@@ -21,10 +22,15 @@ public class Empilhadora extends Movable{
 		this.Battery = FULL_BATTERY;
 		this.imageName = "Empilhadora_D";
 		this.setHammer = false;
+		this.moves = 0;
 	}
 
 	public int getBattery() {
 		return Battery;
+	}
+
+	public int getMoves() {
+		return moves;
 	}
 
 	@Override
@@ -109,6 +115,7 @@ public class Empilhadora extends Movable{
 			if (canBobcatMove(direction)) {
 				setPosition(newPosition);
 				Battery--;
+				moves++;
 			}
 
 			//interagir com um Alvo ou outro elemento
