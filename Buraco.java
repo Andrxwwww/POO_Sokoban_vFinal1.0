@@ -27,14 +27,16 @@ public class Buraco extends GameElement implements Interactable {
             gameEngine.bobcat.setPosition(gameEngine.bobcat.getPosition().plus(Direction.directionFor(gameEngine.getGui().keyPressed()).asVector()));
             gameEngine.removeGameElement(this);
             gameEngine.removeGameElement(ge);
-        } else if ( ge instanceof Caixote) {
+        } else if ( ge instanceof Caixote ) {
             gameEngine.bobcat.setPosition(gameEngine.bobcat.getPosition().plus(Direction.directionFor(gameEngine.getGui().keyPressed()).asVector()));
             gameEngine.removeGameElement(ge);
             gameEngine.getGui().removeImage(ge);
-            gameEngine.infoBox("Press SPACE for restart", "The number of boxes on inferior than the targets :(");
+            gameEngine.infoBox("     [Box fell in a hole] \n" + "Press SPACE for restart", "You Lost :(");
             gameEngine.restartGame();
         } else if ( ge instanceof Empilhadora) {
-            gameEngine.infoBox("Press SPACE for restart", "You Lost :(");
+            gameEngine.removeGameElement(ge);
+            gameEngine.getGui().removeImage(ge);
+            gameEngine.infoBox("   [Bobcat fell in a hole] \n" + "Press SPACE for restart", "You Lost :(");
             gameEngine.restartGame();
         }
     }

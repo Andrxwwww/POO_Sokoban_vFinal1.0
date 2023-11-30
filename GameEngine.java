@@ -31,7 +31,8 @@ public class GameEngine implements Observer {
 	public int score; // Pontuacao
 	public String playerName; // Nome do jogador
 
-	public final int FIRST_LEVEL = 6;
+	public final int BATTERY_RELOAD = 50;
+	public final int FIRST_LEVEL = 0;
 
 	private GameEngine() {
 		gameElementsList = new ArrayList<>();
@@ -79,12 +80,18 @@ public class GameEngine implements Observer {
 		if (bobcat != null && Direction.isDirection(key)) { // se a empilhadora nao for null e a tecla pressionada for uma direcao(setinhas)
 			bobcatKeyMechanics(key);
 			gui.setStatusMessage(" SOKOBAN " + " | Player: " + playerName + " | Level: " + level_num + " | Battery: " + bobcat.getBattery() + " | Moves: " + bobcat.getMoves() + " | Score: " + score);
-			bobcat.pickUpBattery();
-			bobcat.pickUpHammer();
+			bobcat.pickUpItem(Bateria.class, b -> bobcat.addBattery(BATTERY_RELOAD));
+			bobcat.pickUpItem(Martelo.class, m -> bobcat.setHammer(true));
 
 			winGame();
 		}
 	}
+
+	private void bobcatKeyMechanics(int key) {
+		bobcat.move(key);
+		bobcat.driveTo(Direction.directionFor(key));
+	}
+
 
 	public void otherKeyInteractions(int key) {
 		if (key == KeyEvent.VK_SPACE) {
@@ -195,11 +202,6 @@ public class GameEngine implements Observer {
 		} else {
 			gameElementsList.add(gameElement);
 		}
-	}
-
-	private void bobcatKeyMechanics(int key) {
-		bobcat.move(key);
-		bobcat.driveTo(Direction.directionFor(key));
 	}
 
 	private void sendImagesToGUI() {

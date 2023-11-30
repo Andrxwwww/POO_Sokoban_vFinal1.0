@@ -33,7 +33,7 @@ public abstract class Movable extends GameElement {
 		return null;
 	}
 
-    public boolean canMove(Direction direction) {
+    public boolean canMovableMove(Direction direction) {
         Point2D newPosition = super.getPosition().plus(direction.asVector());
         GameElement new_ge = getGameElementAtPosition(newPosition);
         if (new_ge instanceof Movable || new_ge instanceof Parede || new_ge instanceof ParedeRachada){
@@ -44,7 +44,7 @@ public abstract class Movable extends GameElement {
 
     public void movableInteractWith(GameElement ge) {
         if (ge instanceof Empilhadora) {
-            if (canMove(Direction.directionFor(GameEngine.getInstance().getGui().keyPressed()))) {
+            if (canMovableMove(Direction.directionFor(GameEngine.getInstance().getGui().keyPressed()))) {
                 this.moveTo(Direction.directionFor(GameEngine.getInstance().getGui().keyPressed()));
                 GameEngine.getInstance().bobcat.addBattery(-1);
             }
